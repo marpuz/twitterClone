@@ -1,0 +1,12 @@
+.form-widget {
+    display: flex;
+    flex-direction: column;
+}
+
+.button-block-primary, .button-block {
+    border: 0;
+    margin: 5px;
+    background-color: rgb(1, 0, 50);
+    color: white;
+    border-radius: 1em;
+}

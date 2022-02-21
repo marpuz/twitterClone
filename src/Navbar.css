@@ -1,0 +1,31 @@
+.navbar {
+    background-color: rgb(1, 0, 50);
+    color: white;
+    position: sticky;
+    display: flex;
+    width: 100vw;
+    height: 48px;
+    align-items:center;
+    justify-content:end;
+}
+
+.page-title {
+    font-size: 2em;
+    position: absolute;
+    left: 1em;
+    align-self: flex-start;
+}
+
+.nav-link {
+    margin-right: 1em;
+    color: white;
+}
+
+.nav-link, .nav-link:active, .nav-link:focus {
+    text-decoration: none;
+    color: inherit;
+}
+
+.nav-link:hover {
+    color:rgb(168, 168, 168)
+}
