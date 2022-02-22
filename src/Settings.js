@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { supabase } from './supabaseClient'
 import SignIn from './SignIn'
 import Account from './Account'
+import './Settings.css'
 
 export default function Home() {
     const [session, setSession] = useState(null)
@@ -15,8 +16,8 @@ export default function Home() {
     }, [])
   
     return (
-      <div className="container" style={{ padding: '50px 0 100px 0' }}>
-        {!session ? <SignIn /> : <Account key={session.user.id} session={session} />}
+      <div className="profile-container">
+        <div className='profile-settings'>{!session ? <SignIn /> : <Account key={session.user.id} session={session} />}</div>
       </div>
     )
   }

@@ -1,9 +1,47 @@
 import './Home.css'
+import { useState, useEffect } from 'react'
+import { supabase } from './supabaseClient'
+import Post from './Post';
+import AddPost from './AddPost'
 
 const Home = () => {
+    const session = supabase.auth.session()
+    const [loading, setLoading] = useState(true)
+    const [posts, setPosts] = useState(null)
+
+    useEffect(() => {
+        getPosts()
+      }, [session])
+
+    async function getPosts() {
+        try {
+            setLoading(true)
+            const { data, error } = await supabase
+                .from('posts')
+                .select(`*, profiles:user_id (username, avatar_url)`)
+                
+      
+            if (error) {
+              throw error
+            }
+      
+            if (data) {
+                setPosts(data)
+            }
+          } catch (error) {
+            alert(error.message)
+          } finally {
+            setLoading(false)
+          }
+    }
+    
+
+
+
     return (
-        <div className="container">
-            <h1>Work in progress...</h1>
+        <div className="home-container">
+            <AddPost session={session} />
+            <div className='posts'>{loading? 'Loading...' : posts && posts.map(post => <Post key={post.post_id} post={post} />)}</div>
         </div>
     );
 }

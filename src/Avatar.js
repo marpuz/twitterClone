@@ -3,7 +3,7 @@ import { supabase } from './supabaseClient'
 import './Avatar.css'
 import avatar from './default-avatar.jpg'
 
-export default function Avatar({ url, size, onUpload }) {
+export default function Avatar({ url, size, onUpload, isReadOnly }) {
   const [avatarUrl, setAvatarUrl] = useState(null)
   const [uploading, setUploading] = useState(false)
 
@@ -26,6 +26,7 @@ export default function Avatar({ url, size, onUpload }) {
 
 
   async function uploadAvatar(event) {
+    if (isReadOnly) return
     try {
       setUploading(true)
 
@@ -69,7 +70,7 @@ export default function Avatar({ url, size, onUpload }) {
           className="avatar-image"
         />
       )}
-      <div style={{ width: size }}>
+      {!isReadOnly && <div style={{ width: size }}>
         <label className="button primary block" htmlFor="single">
           {uploading ? 'Uploading ...' : 'Upload'}
         </label>
@@ -84,7 +85,7 @@ export default function Avatar({ url, size, onUpload }) {
           onChange={uploadAvatar}
           disabled={uploading}
         />
-      </div>
+      </div>}
     </div>
   )
 }

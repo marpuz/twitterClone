@@ -9,6 +9,7 @@ export default function Account({ session }) {
   const [website, setWebsite] = useState(null)
   const [avatar_url, setAvatarUrl] = useState(null)
   const [about_me, setAboutMe] = useState(null)
+  console.log(session)
   
 
 

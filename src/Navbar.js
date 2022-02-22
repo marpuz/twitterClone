@@ -19,7 +19,7 @@ const Navbar = () => {
         <nav><div className='navbar'>
             <span className='page-title'>My Tweeter</span>
             <Link to='/' className='nav-link'><span>Home</span></Link>
-            {session ? <Link to='/profile' className='nav-link'><span>Profile</span></Link> : <Link to='/profile' className='nav-link'><span>Log in</span></Link>}
+            {session ? <Link to='/settings' className='nav-link'><span>Settings</span></Link> : <Link to='/settings' className='nav-link'><span>Log in</span></Link>}
           </div></nav>
     );
 }

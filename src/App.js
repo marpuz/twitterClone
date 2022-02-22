@@ -4,7 +4,7 @@ import SignIn from './SignIn';
 import Home from './Home';
 import Navbar from './Navbar';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Profile from './Profile';
+import Settings from './Settings';
 
 
 function App() {
@@ -24,8 +24,8 @@ function App() {
             <Route path='/signup'>
               <SignUp />
             </Route>
-            <Route path='/profile'>
-              <Profile />
+            <Route path='/settings'>
+              <Settings />
             </Route>
           </Switch>
         </div>

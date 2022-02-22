@@ -1,0 +1,20 @@
+.user-post-avatar .avatar-image {
+    height: 50px;
+    width: 50px;
+}
+
+.full-post {
+    display: flex;
+    width: 550px;
+    border: 1px solid gray;
+    border-top: 0;
+}
+.post-content {
+    display:flex;
+    flex-direction: column;
+}
+
+.profile-link, .profile-link:active, .profile-link:focus {
+    text-decoration: none;
+    color: inherit;
+}
