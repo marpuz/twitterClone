@@ -16,7 +16,7 @@ export default function Home() {
     }, [])
   
     return (
-      <div className="profile-container">
+      <div className="settings-container">
         <div className='profile-settings'>{!session ? <SignIn /> : <Account key={session.user.id} session={session} />}</div>
       </div>
     )

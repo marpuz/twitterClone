@@ -9,6 +9,7 @@ export default function SignIn() {
   const [password, setPassword] = useState('')
   const session = supabase.auth.session()
 
+
   const handleSignIn = async (email, password) => {
     try {
       setLoading(true)
@@ -25,7 +26,6 @@ export default function SignIn() {
       setEmail('')
       
     }
-    console.log(session)
   }
 
   

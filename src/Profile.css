@@ -1,0 +1,33 @@
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 600px;
+    height: 100%;
+    background-color: white;
+    margin: auto;
+    border-radius: 1em;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 1em;
+    width: 550px;
+}
+
+.user-profile-avatar .avatar-image {
+    width: 150px;
+    height: 150px;
+}
+
+.posts{
+    margin:1em;
+}
+
+.background {
+    min-height: calc(100vh - 48px);
+    width: 100%;
+    
+}

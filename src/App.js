@@ -5,6 +5,7 @@ import Home from './Home';
 import Navbar from './Navbar';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Settings from './Settings';
+import Profile from './Profile'
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
             <Route path='/settings'>
               <Settings />
             </Route>
+            <Route path="/profiles/:profile_tag" children={<Profile />} />
           </Switch>
         </div>
       </div>

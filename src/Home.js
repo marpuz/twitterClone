@@ -18,7 +18,7 @@ const Home = () => {
             setLoading(true)
             const { data, error } = await supabase
                 .from('posts')
-                .select(`*, profiles:user_id (username, avatar_url)`)
+                .select(`*, profiles:user_id (username, avatar_url, profile_tag)`)
                 
       
             if (error) {
@@ -26,7 +26,7 @@ const Home = () => {
             }
       
             if (data) {
-                setPosts(data)
+                setPosts(data.sort((a, b) => a - b))
             }
           } catch (error) {
             alert(error.message)
@@ -39,9 +39,11 @@ const Home = () => {
 
 
     return (
+      <div>{session? 
         <div className="home-container">
             <AddPost session={session} />
             <div className='posts'>{loading? 'Loading...' : posts && posts.map(post => <Post key={post.post_id} post={post} />)}</div>
+        </div> : 'You must log in' }
         </div>
     );
 }

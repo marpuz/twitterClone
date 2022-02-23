@@ -10,7 +10,7 @@
     border-radius: 1em;
 }
 
-.profile-container{
+.settings-container{
     width: 100%;
     height: calc(100vh - 48px);
 }

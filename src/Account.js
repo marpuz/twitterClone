@@ -9,7 +9,8 @@ export default function Account({ session }) {
   const [website, setWebsite] = useState(null)
   const [avatar_url, setAvatarUrl] = useState(null)
   const [about_me, setAboutMe] = useState(null)
-  console.log(session)
+  const [profile_tag, setPorifleTag] = useState(null)
+  
   
 
 
@@ -24,7 +25,7 @@ export default function Account({ session }) {
 
       let { data, error, status } = await supabase
         .from('profiles')
-        .select(`username, website, avatar_url, about_me`)
+        .select(`username, website, avatar_url, about_me, profile_tag`)
         .eq('id', user.id)
         .single()
 
@@ -37,6 +38,7 @@ export default function Account({ session }) {
         setWebsite(data.website)
         setAvatarUrl(data.avatar_url)
         setAboutMe(data.about_me)
+        setPorifleTag(data.profile_tag)
       }
     } catch (error) {
       alert(error.message)
@@ -49,6 +51,7 @@ export default function Account({ session }) {
     try {
       setLoading(true)
       const user = supabase.auth.user()
+      
 
       const updates = {
         id: user.id,
@@ -56,7 +59,8 @@ export default function Account({ session }) {
         website,
         avatar_url,
         updated_at: new Date(),
-        about_me
+        about_me,
+        profile_tag: username.replace(/ /g, "")
       }
 
       let { error } = await supabase.from('profiles').upsert(updates, {
@@ -70,6 +74,8 @@ export default function Account({ session }) {
       alert(error.message)
     } finally {
       setLoading(false)
+      setPorifleTag(username.replace(/ /g, ""))
+      window.location.reload()
     }
   }
 
@@ -79,12 +85,13 @@ export default function Account({ session }) {
         <label htmlFor="email">Email</label>
         <input id="email" type="text" value={session.user.email} disabled />
       </div>
+      <p>@{profile_tag}</p>
       <Avatar
       url={avatar_url}
       size={150}
       onUpload={(url) => {
         setAvatarUrl(url)
-        updateProfile({ username, website, avatar_url: url })
+        updateProfile({ username, website, avatar_url: url})
       }}
       />
       <div>
@@ -114,7 +121,7 @@ export default function Account({ session }) {
       <div>
         <button
           className="button-block-primary"
-          onClick={() => updateProfile({ username, website, avatar_url, about_me })}
+          onClick={() => {updateProfile({ username, website, avatar_url, about_me})}}
           disabled={loading}
         >
           {loading ? 'Loading ...' : 'Update'}
