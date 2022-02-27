@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from 'react'
-import { supabase } from './supabaseClient'
-import Post from './Post'
+import { supabase } from '../../supabaseClient'
+import Post from '../../Components/Post/Post'
 import './Profile.css'
-import Avatar from './Avatar'
+import Avatar from '../../Components/Avatar/Avatar'
 
 
 const Profile = () => {

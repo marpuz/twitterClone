@@ -1,8 +1,8 @@
 import './Home.css'
 import { useState, useEffect } from 'react'
-import { supabase } from './supabaseClient'
-import Post from './Post';
-import AddPost from './AddPost'
+import { supabase } from '../../supabaseClient'
+import Post from '../../Components/Post/Post';
+import AddPost from '../../Components/AddPost/AddPost'
 
 const Home = () => {
     const session = supabase.auth.session()

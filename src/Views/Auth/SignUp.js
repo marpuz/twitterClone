@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { supabase } from './supabaseClient'
+import { supabase } from '../../supabaseClient'
 import './SignIn'
 
 export default function SignUp() {
@@ -23,6 +23,7 @@ export default function SignUp() {
       setEmail('')
     }
   }
+
 
   return (
     <div className="sign-container">

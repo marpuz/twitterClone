@@ -1,11 +1,11 @@
 import './App.css';
-import SignUp from './SignUp';
-import SignIn from './SignIn';
-import Home from './Home';
-import Navbar from './Navbar';
+import SignUp from './Views/Auth/SignUp';
+import SignIn from './Views/Auth/SignIn';
+import Home from './Views/Home/Home';
+import Navbar from './Components/Navbar/Navbar';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Settings from './Settings';
-import Profile from './Profile'
+import Settings from './Views/Settings/Settings';
+import Profile from './Views/Profile/Profile'
 
 
 function App() {
