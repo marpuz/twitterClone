@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { supabase } from './supabaseClient'
+import { supabase } from '../../supabaseClient'
 import './Avatar.css'
-import avatar from './default-avatar.jpg'
+
 
 export default function Avatar({ url, size, onUpload, isReadOnly }) {
   const [avatarUrl, setAvatarUrl] = useState(null)
@@ -65,7 +65,7 @@ export default function Avatar({ url, size, onUpload, isReadOnly }) {
         />
       ) : (
         <img
-          src={avatar}
+          src={process.env.PUBLIC_URL + '/default-avatar.jpg'}
           alt="Avatar"
           className="avatar-image"
         />

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import { supabase } from './supabaseClient'
-import SignIn from './SignIn'
-import Account from './Account'
+import { supabase } from '../../supabaseClient'
+import SignIn from '../Auth/SignIn'
+import Account from '../../Components/Account/Account'
 import './Settings.css'
 
 export default function Home() {
