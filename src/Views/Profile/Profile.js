@@ -8,6 +8,7 @@ import Avatar from "../../Components/Avatar/Avatar";
 const Profile = () => {
   let { profile_tag } = useParams();
   const [profileExist, setProfileExist] = useState(false);
+  const [followers, setFollowers] = useState(false);
   const [loading, setLoading] = useState(true);
   const [id, setId] = useState(null);
   const [website, setWebsite] = useState(null);
@@ -15,6 +16,7 @@ const Profile = () => {
   const [about_me, setAboutMe] = useState(null);
   const [username, setUserName] = useState(null);
   const [posts, setPosts] = useState(null);
+  const [usersProfile, setUserProfile] = useState(false);
   const session = supabase.auth.session();
   const user = supabase.auth.user();
 
@@ -25,6 +27,35 @@ const Profile = () => {
   useEffect(() => {
     getPosts();
   }, [id]);
+
+  useEffect(() => {
+    getFollowers();
+    if (user.id === id) {
+      setUserProfile(true);
+    }
+  }, [id, followers]);
+
+  async function getFollowers() {
+    if (!id) return;
+    try {
+      const { data, error } = await supabase
+        .from("Followers")
+        .select("*")
+        .eq("followedBy", user.id)
+        .eq("followedUser", id);
+
+      if (error) {
+        throw error;
+      }
+
+      if (data.length !== 0) {
+        setFollowers(true);
+        console.log(data);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  }
 
   async function getProfile() {
     try {
@@ -80,17 +111,40 @@ const Profile = () => {
   }
 
   async function follow() {
-    const { data, error } = await supabase
-      .from("Followers")
-      .insert([{ followedBy: user.id, followedUser: id }]);
+    try {
+      const { data, error } = await supabase
+        .from("Followers")
+        .insert([{ followedBy: user.id, followedUser: id }]);
+
+      if (error) {
+        throw error;
+      }
+
+      if (data) {
+        setFollowers(true);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
   }
 
   async function unfollow() {
-    const { data, error } = await supabase
-      .from("Followers")
-      .delete()
-      .eq("followedBy", user.id)
-      .eq("followedUser", id);
+    try {
+      const { data, error } = await supabase
+        .from("Followers")
+        .delete()
+        .eq("followedBy", user.id)
+        .eq("followedUser", id);
+      if (error) {
+        throw error;
+      }
+
+      if (data) {
+        setFollowers(false);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
   }
 
   return (
@@ -107,8 +161,21 @@ const Profile = () => {
                     <div className="user-profile-avatar">
                       <Avatar url={avatar_url} isReadOnly={true} />
                     </div>
-                    <button onClick={follow}>Follow</button>
-                    <button onClick={unfollow}>Unfollow</button>
+                    {!usersProfile ? (
+                      <div>
+                        {!followers ? (
+                          <button className="follow-btn" onClick={follow}>
+                            Follow
+                          </button>
+                        ) : (
+                          <button className="follow-btn" onClick={unfollow}>
+                            Unfollow
+                          </button>
+                        )}
+                      </div>
+                    ) : (
+                      " "
+                    )}
                     <b>
                       <p>{username}</p>
                     </b>
