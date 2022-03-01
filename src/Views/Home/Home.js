@@ -14,7 +14,7 @@ const Home = () => {
     getPosts();
   }, [session]);
 
-  // async function getFollowers() {
+  // async function getPosts() {
   //   try {
   //     setLoading(true);
   //     const { data, error } = await supabase
@@ -27,8 +27,31 @@ const Home = () => {
   //     }
 
   //     if (data) {
-  //       setFollowers(data);
+  //       followers = data;
   //       console.log(data);
+  //       try {
+  //         setLoading(true);
+  //         const { data, error } = await supabase
+  //           .from("posts")
+  //           .select(`*, profiles:user_id (username, avatar_url, profile_tag)`)
+  //           .eq(
+  //             "user_id",
+  //             followers.map((follower) => follower.followedUser)
+  //           );
+
+  //         if (error) {
+  //           throw error;
+  //         }
+
+  //         if (data) {
+  //           setPosts(data.sort((a, b) => a - b));
+  //           console.log(data);
+  //         }
+  //       } catch (error) {
+  //         alert(error.message);
+  //       } finally {
+  //         setLoading(false);
+  //       }
   //     }
   //   } catch (error) {
   //     alert(error.message);
@@ -41,17 +64,27 @@ const Home = () => {
     try {
       setLoading(true);
       const { data, error } = await supabase
-        .from("posts")
-        .select("*, profiles!inner(*, Followers!inner(*))")
-        .eq("Followers.followedUser", user.id);
+        .from("Followers")
+        .select(
+          "*, profiles!inner(*, posts!inner(*, profiles:user_id (username, avatar_url, profile_tag)))"
+        )
+        .eq("followedBy", user.id);
 
       if (error) {
         throw error;
       }
 
       if (data) {
-        setPosts(data.sort((a, b) => a - b));
-        console.log(data);
+        setPosts(
+          data
+            .flatMap((data) => data.profiles.posts)
+            .sort((a, b) => b.post_id - a.post_id)
+        );
+        console.log(
+          data
+            .flatMap((data) => data.profiles.posts)
+            .sort((a, b) => b.post_id - a.post_id)
+        );
       }
     } catch (error) {
       alert(error.message);
@@ -59,6 +92,29 @@ const Home = () => {
       setLoading(false);
     }
   }
+
+  // async function getPosts() {
+  //   try {
+  //     setLoading(true);
+  //     const { data, error } = await supabase
+  //       .from("posts")
+  //       .select("*, profiles!inner(*)");
+  //     // .eq("profiles.Followers.followedBy", user.id);
+
+  //     if (error) {
+  //       throw error;
+  //     }
+
+  //     if (data) {
+  //       setPosts(data.sort((a, b) => a - b));
+  //       console.log(data);
+  //     }
+  //   } catch (error) {
+  //     alert(error.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }
 
   return (
     <div>
