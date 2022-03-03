@@ -1,22 +1,32 @@
-import Avatar from '../Avatar/Avatar'
-import './Post.css'
+import Avatar from "../Avatar/Avatar";
+import "./Post.css";
+import { formatDistanceToNow } from "date-fns";
 
-const Post = ({post}) => {
-    
-    
-
-    return (
-        <div className='full-post'>
-            <div className='user-post-avatar'><Avatar url={post.profiles.avatar_url} isReadOnly = {true} /></div>
-            <div className='post-content'>
-                <div className='user-info'>
-                    <b><a className='profile-link' href={'/profiles/' + post.profiles.profile_tag}>{post.profiles.username}</a></b>
-                    <a>@{post.profiles.profile_tag}</a>
-                </div>
-                <p>{post.content}</p>
-            </div>
+const Post = ({ post }) => {
+  return (
+    <div className="full-post">
+      <div className="user-post-avatar">
+        <Avatar url={post.profiles.avatar_url} isReadOnly={true} />
+      </div>
+      <div className="post-content">
+        <div className="user-info">
+          <b>
+            <a
+              className="profile-link"
+              href={"/profiles/" + post.profiles.profile_tag}
+            >
+              {post.profiles.username}
+            </a>
+          </b>
+          <a>@{post.profiles.profile_tag}</a>
         </div>
-    );
-}
- 
+        <p>{post.content}</p>
+        <p className="date-time">
+          {formatDistanceToNow(new Date(post.created_at), { addSuffix: true })}
+        </p>
+      </div>
+    </div>
+  );
+};
+
 export default Post;
