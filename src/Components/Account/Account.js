@@ -1,57 +1,55 @@
-import { useState, useEffect } from 'react'
-import { supabase } from '../../supabaseClient'
-import Avatar from '../Avatar/Avatar'
-import './Account.css'
+import { useState, useEffect } from "react";
+import { supabase } from "../../supabaseClient";
+import { useHistory } from "react-router-dom";
+import Avatar from "../Avatar/Avatar";
+import "./Account.css";
 
 export default function Account({ session }) {
-  const [loading, setLoading] = useState(true)
-  const [username, setUsername] = useState(null)
-  const [website, setWebsite] = useState(null)
-  const [avatar_url, setAvatarUrl] = useState(null)
-  const [about_me, setAboutMe] = useState(null)
-  const [profile_tag, setPorifleTag] = useState(null)
-  
-  
-
+  const [loading, setLoading] = useState(true);
+  const [username, setUsername] = useState(null);
+  const [website, setWebsite] = useState(null);
+  const [avatar_url, setAvatarUrl] = useState(null);
+  const [about_me, setAboutMe] = useState(null);
+  const [profile_tag, setPorifleTag] = useState(null);
+  const history = useHistory();
 
   useEffect(() => {
-    getProfile()
-  }, [session])
+    getProfile();
+  }, [session]);
 
   async function getProfile() {
     try {
-      setLoading(true)
-      const user = supabase.auth.user()
+      setLoading(true);
+      const user = supabase.auth.user();
 
       let { data, error, status } = await supabase
-        .from('profiles')
+        .from("profiles")
         .select(`username, website, avatar_url, about_me, profile_tag`)
-        .eq('id', user.id)
-        .single()
+        .eq("id", user.id)
+        .single();
 
       if (error && status !== 406) {
-        throw error
+        throw error;
       }
 
       if (data) {
-        setUsername(data.username)
-        setWebsite(data.website)
-        setAvatarUrl(data.avatar_url)
-        setAboutMe(data.about_me)
-        setPorifleTag(data.profile_tag)
+        setUsername(data.username);
+        setWebsite(data.website);
+        setAvatarUrl(data.avatar_url);
+        setAboutMe(data.about_me);
+        setPorifleTag(data.profile_tag);
       }
     } catch (error) {
-      alert(error.message)
+      alert(error.message);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
 
   async function updateProfile({ username, website, avatar_url, about_me }) {
     try {
-      setLoading(true)
-      const user = supabase.auth.user()
-      
+      setLoading(true);
+      const user = supabase.auth.user();
 
       const updates = {
         id: user.id,
@@ -60,22 +58,22 @@ export default function Account({ session }) {
         avatar_url,
         updated_at: new Date(),
         about_me,
-        profile_tag: username.replace(/ /g, "")
-      }
+        profile_tag: username.replace(/ /g, ""),
+      };
 
-      let { error } = await supabase.from('profiles').upsert(updates, {
-        returning: 'minimal', // Don't return the value after inserting
-      })
+      let { error } = await supabase.from("profiles").upsert(updates, {
+        returning: "minimal", // Don't return the value after inserting
+      });
 
       if (error) {
-        throw error
+        throw error;
       }
     } catch (error) {
-      alert(error.message)
+      alert(error.message);
     } finally {
-      setLoading(false)
-      setPorifleTag(username.replace(/ /g, ""))
-      window.location.reload()
+      setLoading(false);
+      setPorifleTag(username.replace(/ /g, ""));
+      window.location.reload();
     }
   }
 
@@ -87,19 +85,19 @@ export default function Account({ session }) {
       </div>
       <p>@{profile_tag}</p>
       <Avatar
-      url={avatar_url}
-      size={150}
-      onUpload={(url) => {
-        setAvatarUrl(url)
-        updateProfile({ username, website, avatar_url: url})
-      }}
+        url={avatar_url}
+        size={150}
+        onUpload={(url) => {
+          setAvatarUrl(url);
+          updateProfile({ username, website, avatar_url: url });
+        }}
       />
       <div>
         <label htmlFor="username">Name</label>
         <input
           id="username"
           type="text"
-          value={username || ''}
+          value={username || ""}
           onChange={(e) => setUsername(e.target.value)}
         />
       </div>
@@ -108,31 +106,42 @@ export default function Account({ session }) {
         <input
           id="website"
           type="website"
-          value={website || ''}
+          value={website || ""}
           onChange={(e) => setWebsite(e.target.value)}
         />
       </div>
       <label htmlFor="about_me">About me</label>
       <div>
-          <textarea id='about_me' type="text" value={about_me || ''}
+        <textarea
+          id="about_me"
+          type="text"
+          value={about_me || ""}
           onChange={(e) => setAboutMe(e.target.value)}
-          />
+        />
       </div>
       <div>
         <button
           className="button-block-primary"
-          onClick={() => {updateProfile({ username, website, avatar_url, about_me})}}
+          onClick={() => {
+            updateProfile({ username, website, avatar_url, about_me });
+          }}
           disabled={loading}
         >
-          {loading ? 'Loading ...' : 'Update'}
+          {loading ? "Loading ..." : "Update"}
         </button>
       </div>
 
       <div>
-        <button className="button-block" onClick={() => supabase.auth.signOut()}>
+        <button
+          className="button-block"
+          onClick={() => {
+            supabase.auth.signOut();
+            history.push("/signin");
+          }}
+        >
           Sign Out
         </button>
       </div>
     </div>
-  )
+  );
 }

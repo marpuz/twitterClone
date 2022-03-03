@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "../../supabaseClient";
 import Post from "../../Components/Post/Post";
 import AddPost from "../../Components/AddPost/AddPost";
+import SignIn from "../Auth/SignIn";
 
 const Home = () => {
   const session = supabase.auth.session();
@@ -61,6 +62,7 @@ const Home = () => {
   // }
 
   async function getPosts() {
+    if (!session) return;
     try {
       setLoading(true);
       const { data, error } = await supabase
@@ -129,7 +131,9 @@ const Home = () => {
           </div>
         </div>
       ) : (
-        "You must log in"
+        <div className="home-container">
+          <h1>You must be logged in</h1>
+        </div>
       )}
     </div>
   );

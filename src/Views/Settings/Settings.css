@@ -1,16 +1,15 @@
-.profile-settings{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    max-width: 600px;
-    height: 100%;
-    background-color: white;
-    margin: auto;
-    border-radius: 1em;
+.profile-settings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 600px;
+  /* height: 100%; */
+  background-color: white;
+  margin: auto;
+  border-radius: 1em;
 }
 
-.settings-container{
-    width: 100%;
-    height: calc(100vh - 48px);
+.settings-container {
+  margin: 4em;
 }
