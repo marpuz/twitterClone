@@ -11,7 +11,9 @@ export default function Account({ session }) {
   const [avatar_url, setAvatarUrl] = useState(null);
   const [about_me, setAboutMe] = useState(null);
   const [profile_tag, setPorifleTag] = useState(null);
+  const [id, setId] = useState(null);
   const history = useHistory();
+  const user = supabase.auth.user();
 
   useEffect(() => {
     getProfile();
@@ -20,11 +22,10 @@ export default function Account({ session }) {
   async function getProfile() {
     try {
       setLoading(true);
-      const user = supabase.auth.user();
 
       let { data, error, status } = await supabase
         .from("profiles")
-        .select(`username, website, avatar_url, about_me, profile_tag`)
+        .select(`id, username, website, avatar_url, about_me, profile_tag`)
         .eq("id", user.id)
         .single();
 
@@ -38,6 +39,7 @@ export default function Account({ session }) {
         setAvatarUrl(data.avatar_url);
         setAboutMe(data.about_me);
         setPorifleTag(data.profile_tag);
+        setId(data.id);
       }
     } catch (error) {
       alert(error.message);
@@ -49,7 +51,6 @@ export default function Account({ session }) {
   async function updateProfile({ username, website, avatar_url, about_me }) {
     try {
       setLoading(true);
-      const user = supabase.auth.user();
 
       const updates = {
         id: user.id,

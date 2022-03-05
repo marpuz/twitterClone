@@ -161,21 +161,17 @@ const Profile = () => {
                     <div className="user-profile-avatar">
                       <Avatar url={avatar_url} isReadOnly={true} />
                     </div>
-                    {!usersProfile ? (
-                      <div>
-                        {!followers ? (
-                          <button className="follow-btn" onClick={follow}>
-                            Follow
-                          </button>
-                        ) : (
-                          <button className="follow-btn" onClick={unfollow}>
-                            Unfollow
-                          </button>
-                        )}
-                      </div>
-                    ) : (
-                      " "
-                    )}
+                    <div>
+                      {!followers ? (
+                        <button className="follow-btn" onClick={follow}>
+                          Follow
+                        </button>
+                      ) : (
+                        <button className="follow-btn" onClick={unfollow}>
+                          Unfollow
+                        </button>
+                      )}
+                    </div>
                     <b>
                       <p>{username}</p>
                     </b>

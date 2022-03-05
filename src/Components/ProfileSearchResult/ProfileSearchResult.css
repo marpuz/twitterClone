@@ -1,0 +1,17 @@
+.profile-search-avatar .avatar-image {
+  height: 33px;
+  width: 33px;
+}
+
+.search-profile-box {
+  display: flex;
+  align-items: center;
+  background-color: gray;
+}
+
+.search-profile-box,
+.search-profile:active,
+.search-profile:focus {
+  text-decoration: none;
+  color: inherit;
+}
