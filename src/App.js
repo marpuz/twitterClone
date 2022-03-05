@@ -12,7 +12,7 @@ function App() {
     <div>
       <Router>
         <div className="App">
-          <nav>
+          <nav className="navbar-fixed">
             <Navbar />
           </nav>
           <div className="content">
