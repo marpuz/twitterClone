@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../../supabaseClient";
-import SignIn from "../Auth/SignIn";
+
 import Account from "../../Components/Account/Account";
 import "./Settings.css";
+import LoadingIcon from "../../Components/LoadingIcon/LoadingIcon";
 
 export default function Home() {
   const [session, setSession] = useState(null);
@@ -19,7 +20,7 @@ export default function Home() {
     <div className="profile-settings">
       <div className="settings-container">
         {!session ? (
-          <SignIn />
+          <LoadingIcon />
         ) : (
           <Account key={session.user.id} session={session} />
         )}

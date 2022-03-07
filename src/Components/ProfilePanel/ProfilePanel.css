@@ -1,0 +1,14 @@
+.profile-panel-container {
+  color: black;
+  padding: 1em;
+}
+
+.profile-panel-avatar .avatar-image {
+  width: 70px;
+  height: 70px;
+}
+
+.profile-panel-navigation {
+  display: flex;
+  flex-direction: column;
+}

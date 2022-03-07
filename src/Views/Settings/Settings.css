@@ -13,3 +13,9 @@
 .settings-container {
   margin: 4em;
 }
+
+.loading-icon {
+  position: fixed;
+  left: 50vw;
+  top: 50vh;
+}

@@ -4,6 +4,7 @@ import { supabase } from "../../supabaseClient";
 import Post from "../../Components/Post/Post";
 import "./Profile.css";
 import Avatar from "../../Components/Avatar/Avatar";
+import LoadingIcon from "../../Components/LoadingIcon/LoadingIcon";
 
 const Profile = () => {
   let { profile_tag } = useParams();
@@ -152,7 +153,9 @@ const Profile = () => {
       {session ? (
         <div>
           {loading ? (
-            "Loading..."
+            <div className="loading-icon">
+              <LoadingIcon />
+            </div>
           ) : (
             <div>
               {profileExist ? (
