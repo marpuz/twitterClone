@@ -6,8 +6,10 @@
 .full-post {
   display: flex;
   width: 550px;
-  border: 1px solid gray;
-  border-top: 0;
+  background-color: white;
+  margin: 1em;
+  padding: 1em;
+  border-radius: 0.5em;
 }
 .post-content {
   display: flex;

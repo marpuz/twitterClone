@@ -1,26 +1,24 @@
-
-
 .user-avatar .avatar-image {
-    height: 48px;
-    width: 48px;
-    margin-right: 1em;
-    padding: 0;
+  height: 48px;
+  width: 48px;
+  margin-right: 1em;
+  padding: 0;
 }
 
 .add-post-input input {
-    height: 48px;
-    width: 480px;
-    padding: 0;
-    margin: auto;
-    border-radius: 1em;
-    border: 2px solid gray;
+  height: 48px;
+  width: 440px;
+  padding: 0;
+  border-radius: 1em;
+  border: 2px solid gray;
+  padding-left: 0.5em;
 }
 
 .new-post-input {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 1em;
-    max-width: 550px;
-    max-height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+  height: 60px;
+  margin: 1em;
 }

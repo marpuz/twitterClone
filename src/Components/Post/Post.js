@@ -1,6 +1,7 @@
 import Avatar from "../Avatar/Avatar";
 import "./Post.css";
 import { formatDistanceToNow } from "date-fns";
+import { Link } from "react-router-dom";
 
 const Post = ({ post }) => {
   return (
@@ -11,14 +12,14 @@ const Post = ({ post }) => {
       <div className="post-content">
         <div className="user-info">
           <b>
-            <a
+            <Link
+              to={`/profiles/${post.profiles.profile_tag}`}
               className="profile-link"
-              href={"/profiles/" + post.profiles.profile_tag}
             >
               {post.profiles.username}
-            </a>
+            </Link>
           </b>
-          <a>@{post.profiles.profile_tag}</a>
+          <span>@{post.profiles.profile_tag}</span>
         </div>
         <p>{post.content}</p>
         <p className="date-time">

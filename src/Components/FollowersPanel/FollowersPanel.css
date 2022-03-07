@@ -1,0 +1,23 @@
+.follower-user-box .avatar-image {
+  width: 40px;
+  height: 40px;
+}
+
+.follower-user-box {
+  display: flex;
+  padding: 0.5em;
+  margin: 0.5em;
+  height: 40px;
+  align-items: center;
+}
+
+.nav-link,
+.nav-link:active,
+.nav-link:focus {
+  text-decoration: none;
+  color: inherit;
+}
+
+.nav-link:hover {
+  color: rgb(168, 168, 168);
+}
