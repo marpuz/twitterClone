@@ -1,46 +1,27 @@
 import ProfilePanel from "../ProfilePanel/ProfilePanel";
 import "./Wrapper.css";
 import { supabase } from "../../supabaseClient";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import LoadingIcon from "../LoadingIcon/LoadingIcon";
 import FollowersPanel from "../FollowersPanel/FollowersPanel";
+import { SupabaseContext } from "../../State";
 
 const Wrapper = ({ children }) => {
   const [profile, setProfile] = useState(null);
-  const [followers, setFollowers] = useState(null);
-  const [profileLoading, setProfileLoading] = useState(null);
-  const [followersLoading, setFollowersLoading] = useState(null);
+  const [profileLoading, setProfileLoading] = useState(false);
+  const [followersLoading, setFollowersLoading] = useState(false);
   const user = supabase.auth.user();
   const session = supabase.auth.session();
+  const supabaseState = useContext(SupabaseContext);
 
   useEffect(() => {
     getProfile();
   }, [session]);
 
   useEffect(() => {
-    getFollowers();
+    console.log("asdsdfsdf");
+    supabaseState.getFollowers();
   }, [session]);
-
-  async function getFollowers() {
-    if (!session) return;
-    try {
-      const { data, error } = await supabase
-        .from("Followers")
-        .select("*, profiles:followedUser (*)")
-        .eq("followedBy", user.id);
-
-      if (error) {
-        throw error;
-      }
-
-      if (data.length !== 0) {
-        setFollowers(data);
-        console.log(data);
-      }
-    } catch (error) {
-      alert(error.message);
-    }
-  }
 
   async function getProfile() {
     if (!session) return;
@@ -82,8 +63,8 @@ const Wrapper = ({ children }) => {
 
       <div className="followers-panel">
         {!followersLoading ? (
-          followers &&
-          followers.map((follower) => (
+          supabaseState.followers &&
+          supabaseState.followers.map((follower) => (
             <FollowersPanel key={follower.followedUser} follower={follower} />
           ))
         ) : (
