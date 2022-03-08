@@ -1,10 +1,11 @@
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { supabase } from "../../supabaseClient";
 import Post from "../../Components/Post/Post";
 import "./Profile.css";
 import Avatar from "../../Components/Avatar/Avatar";
 import LoadingIcon from "../../Components/LoadingIcon/LoadingIcon";
+import { SupabaseContext } from "../../State";
 
 const Profile = () => {
   let { profile_tag } = useParams();
@@ -20,6 +21,7 @@ const Profile = () => {
   const [usersProfile, setUserProfile] = useState(false);
   const session = supabase.auth.session();
   const user = supabase.auth.user();
+  const { getFollowers } = useContext(SupabaseContext);
 
   useEffect(() => {
     getProfile();
@@ -30,13 +32,13 @@ const Profile = () => {
   }, [id]);
 
   useEffect(() => {
-    getFollowers();
+    isFollowers();
     if (user.id === id) {
       setUserProfile(true);
     }
   }, [id, followers]);
 
-  async function getFollowers() {
+  async function isFollowers() {
     if (!id) return;
     try {
       const { data, error } = await supabase
@@ -51,7 +53,6 @@ const Profile = () => {
 
       if (data.length !== 0) {
         setFollowers(true);
-        console.log(data);
       }
     } catch (error) {
       alert(error.message);
@@ -123,6 +124,7 @@ const Profile = () => {
 
       if (data) {
         setFollowers(true);
+        getFollowers();
       }
     } catch (error) {
       alert(error.message);
@@ -142,6 +144,7 @@ const Profile = () => {
 
       if (data) {
         setFollowers(false);
+        getFollowers();
       }
     } catch (error) {
       alert(error.message);
