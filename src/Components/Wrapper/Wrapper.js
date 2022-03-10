@@ -9,7 +9,6 @@ import { SupabaseContext } from "../../State";
 const Wrapper = ({ children }) => {
   const [profile, setProfile] = useState(null);
   const [profileLoading, setProfileLoading] = useState(false);
-  const [followersLoading, setFollowersLoading] = useState(false);
   const user = supabase.auth.user();
   const session = supabase.auth.session();
   const supabaseState = useContext(SupabaseContext);
@@ -19,7 +18,6 @@ const Wrapper = ({ children }) => {
   }, [session]);
 
   useEffect(() => {
-    console.log("asdsdfsdf");
     supabaseState.getFollowers();
   }, [session]);
 
@@ -49,9 +47,10 @@ const Wrapper = ({ children }) => {
   }
 
   return (
-    <div className="wrapper">
+    <div className="grid grid-cols-6 max-h-[100vh] overflow-auto">
+      <div className="col-span-1"></div>
       {!profileLoading ? (
-        <div className="profile-panel">
+        <div className="profile-panel col-span-1 position: sticky top-0 h-min">
           <ProfilePanel profile={profile} />
         </div>
       ) : (
@@ -59,19 +58,13 @@ const Wrapper = ({ children }) => {
           <LoadingIcon />
         </div>
       )}
-      <div className="content">{children}</div>
+      <div className="content col-span-2">{children}</div>
 
-      <div className="followers-panel">
-        {!followersLoading ? (
-          supabaseState.followers &&
+      <div className="followers-panel col-span-2 position: sticky top-0 h-min">
+        {supabaseState.followers &&
           supabaseState.followers.map((follower) => (
             <FollowersPanel key={follower.followedUser} follower={follower} />
-          ))
-        ) : (
-          <div className="loading-icon">
-            <LoadingIcon />
-          </div>
-        )}
+          ))}
       </div>
     </div>
   );
