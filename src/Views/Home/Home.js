@@ -1,4 +1,3 @@
-import "./Home.css";
 import { useState, useEffect } from "react";
 import { supabase } from "../../supabaseClient";
 import Post from "../../Components/Post/Post";
@@ -55,7 +54,7 @@ const Home = () => {
           </div>
           <div className="posts">
             {loading ? (
-              <div className="loading-icon">
+              <div className="loading-icon display: flex justify-center items-center">
                 <LoadingIcon />
               </div>
             ) : (

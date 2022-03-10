@@ -3,7 +3,6 @@ import { supabase } from "../../supabaseClient";
 import { useHistory } from "react-router-dom";
 import Avatar from "../Avatar/Avatar";
 import LoadingIcon from "../LoadingIcon/LoadingIcon";
-import "./Account.css";
 
 export default function Account({ session }) {
   const [loading, setLoading] = useState(true);
@@ -80,74 +79,78 @@ export default function Account({ session }) {
   }
 
   return (
-    <div>
+    <div className="display: flex bg-gray-900 m-4 p-2 rounded-md text-slate-400 justify-center items-center p-8">
       {loading ? (
         <div className="loading-icon">
           <LoadingIcon />
         </div>
       ) : (
         <div className="form-widget">
-          <div>
-            <label htmlFor="email">Email</label>
-            <input id="email" type="text" value={session.user.email} disabled />
+          <p className="m-1">Email:{session.user.email}</p>
+          <p className="m-1 mb-3 text-sm">@{profile_tag}</p>
+          <div className="m-1">
+            <Avatar
+              url={avatar_url}
+              size={150}
+              height={"200px"}
+              width={"200px"}
+              onUpload={(url) => {
+                setAvatarUrl(url);
+                updateProfile({ username, website, avatar_url: url });
+              }}
+            />
           </div>
-          <p>@{profile_tag}</p>
-          <Avatar
-            url={avatar_url}
-            size={150}
-            onUpload={(url) => {
-              setAvatarUrl(url);
-              updateProfile({ username, website, avatar_url: url });
-            }}
-          />
-          <div>
+          <div className="mt-3">
             <label htmlFor="username">Name</label>
             <input
+              className="rounded-lg border-[1px] border-gray-600 pl-2 ml-1 bg-gray-900 p-2 m-1 w-full"
               id="username"
               type="text"
               value={username || ""}
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
-          <div>
+          <div className="mt-3">
             <label htmlFor="website">Website</label>
             <input
+              className="rounded-lg border-[1px] border-gray-600 pl-2 ml-1 bg-gray-900 p-2 m-1 w-full"
               id="website"
               type="website"
               value={website || ""}
               onChange={(e) => setWebsite(e.target.value)}
             />
           </div>
-          <label htmlFor="about_me">About me</label>
-          <div>
-            <textarea
-              id="about_me"
-              type="text"
-              value={about_me || ""}
-              onChange={(e) => setAboutMe(e.target.value)}
-            />
+          <div className="mt-3">
+            <label htmlFor="about_me">About me</label>
+            <div>
+              <textarea
+                className="rounded-lg border-[1px] border-gray-600 pl-2 ml-1 bg-gray-900 p-2 m-1 w-full"
+                id="about_me"
+                type="text"
+                value={about_me || ""}
+                onChange={(e) => setAboutMe(e.target.value)}
+              />
+            </div>
           </div>
-          <div>
+          <div className="display: flex justify-center">
             <button
-              className="button-block-primary"
+              className="follow-btn display: flex justify-center items-center text-sm rounded-lg border-[2px] border-white mt-3 p-[4px] bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white m-3"
               onClick={() => {
                 updateProfile({ username, website, avatar_url, about_me });
               }}
               disabled={loading}
             >
-              {loading ? "Loading ..." : "Update"}
+              <b>{loading ? "Loading ..." : "Update"}</b>
             </button>
-          </div>
 
-          <div>
             <button
-              className="button-block"
+              className="follow-btn display: flex justify-center items-center text-sm rounded-lg border-[2px] border-white mt-3 p-[4px] bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white m-3"
               onClick={() => {
                 supabase.auth.signOut();
                 history.push("/signin");
               }}
             >
-              Sign Out
+              <b>Sign Out</b>
             </button>
           </div>
         </div>

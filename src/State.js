@@ -3,9 +3,6 @@ import { supabase } from "./supabaseClient";
 
 export const SupabaseContext = React.createContext();
 
-const user = supabase.auth.user();
-const session = supabase.auth.session();
-
 export const SupabaseContextProvider = ({ children }) => {
   const setFollowers = (val) => {
     setState((prev) => ({ ...prev, followers: val }));
@@ -15,9 +12,12 @@ export const SupabaseContextProvider = ({ children }) => {
     followers: null,
     setFollowers,
     getFollowers,
+    setFollowers,
   });
 
   async function getFollowers() {
+    const user = supabase.auth.user();
+    const session = supabase.auth.session();
     if (!session) return;
     try {
       const { data, error } = await supabase
@@ -31,7 +31,6 @@ export const SupabaseContextProvider = ({ children }) => {
 
       if (data.length !== 0) {
         setFollowers(data);
-        console.log(data);
       }
     } catch (error) {
       alert(error.message);
